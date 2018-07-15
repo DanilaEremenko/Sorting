@@ -4,7 +4,6 @@ public class Sorting {
     static private Random random = new Random();
 
 
-
     //----------------------------------------------------------------------------------------------
     //Worst and Average Case Time Complexity: O(n*n)
     //Auxiliary Space: O(1)
@@ -201,8 +200,20 @@ public class Sorting {
     //Worst:    O(n*logn)
     //Auxiliary Space: O(n)
     //Stable: Yes
+    static int[] standartTreeSort(int array[]) {
+        int result[] = array.clone();
+        TreeSet<Integer> treeSet = new TreeSet<>();
+        for (int anResult : result)
+            treeSet.add(anResult);
 
-
+        Iterator<Integer> iterator = treeSet.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            result[i] = iterator.next();
+            i++;
+        }
+        return result;
+    }
 
 
     //----------------------------------------------------------------------------------------------

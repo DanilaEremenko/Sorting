@@ -11,7 +11,7 @@ public class SortingTest {
     private final int DIGITS_RADIUS = 10000;
 
     private Random random = new Random();
-    private HashMap<Integer, ArrayList<Integer>> hashMap = generateHashMap();
+    private HashMap<Integer, ArrayList<Integer>> hashMap;
     private final int normalize_koef = 10000;
 
     private boolean BUBBLE_SORT = false;
@@ -21,6 +21,26 @@ public class SortingTest {
     private boolean MERGE_FROM_INTERNET_SORT = true;
     private boolean QUICK_SORT = true;
     private boolean TREE_SORT = true;
+
+
+    private ArrayList<Integer> getAbsolutelyUnsortedArraylist() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        for (int i = 0; i < ARRAYS_SIZE; i++)
+            arrayList.add(ARRAYS_SIZE - i);
+
+        return arrayList;
+    }
+
+    private ArrayList<Integer> getAbsolutelySortedArraylist() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        for (int i = 0; i < ARRAYS_SIZE; i++)
+            arrayList.add(i);
+
+        return arrayList;
+
+    }
 
     private ArrayList<Integer> getRandomArrayList() {
         ArrayList<Integer> arrayList = new ArrayList<>();
@@ -45,35 +65,37 @@ public class SortingTest {
         return arrayList;
     }
 
-    private ArrayList<Integer> getUnsortedArraylist() {
-        ArrayList<Integer> arrayList = new ArrayList<>();
 
-        for (int i = 0; i < ARRAYS_SIZE; i++)
-            arrayList.add(ARRAYS_SIZE - i);
-
-        return arrayList;
-    }
-
-    private ArrayList<Integer> getSortedArraylist() {
-        ArrayList<Integer> arrayList = new ArrayList<>();
-
-        for (int i = 0; i < ARRAYS_SIZE; i++)
-            arrayList.add(i);
-
-        return arrayList;
-
-    }
-
-
-    private HashMap<Integer, ArrayList<Integer>> generateHashMap() {
+    private HashMap<Integer, ArrayList<Integer>> generateAbsolutelyUnsortedHashMap() {
         HashMap<Integer, ArrayList<Integer>> hashMap = new HashMap<>();
 
         for (int i = 0; i < TEST_DIGIT; i++)
-            hashMap.put(i, getUnsortedArraylist());
+            hashMap.put(i, getAbsolutelyUnsortedArraylist());
 
         return hashMap;
 
     }
+
+    private HashMap<Integer, ArrayList<Integer>> generateAbsolutelySortedHashMap() {
+        HashMap<Integer, ArrayList<Integer>> hashMap = new HashMap<>();
+
+        for (int i = 0; i < TEST_DIGIT; i++)
+            hashMap.put(i, getAbsolutelySortedArraylist());
+
+        return hashMap;
+
+    }
+
+    private HashMap<Integer, ArrayList<Integer>> generateRandomHashMap() {
+        HashMap<Integer, ArrayList<Integer>> hashMap = new HashMap<>();
+
+        for (int i = 0; i < TEST_DIGIT; i++)
+            hashMap.put(i, getRandomArrayList());
+
+        return hashMap;
+
+    }
+
 
     private int[] listToArray(ArrayList<Integer> arrayList) {
         int result[] = new int[arrayList.size()];
@@ -92,41 +114,9 @@ public class SortingTest {
     }
 
 
-    @org.junit.Test
-    public void bubbleSort() {
-        for (int i = 0; i < TEST_DIGIT; i++) {
 
-            int array[] = Sorting.bubbleSort(listToArray(hashMap.get(i)));
 
-            assertEquals(true, Sorting.arrayIsSorted(array));
-
-        }
-    }
-
-    @org.junit.Test
-    public void mergeSort() {
-        for (int i = 0; i < TEST_DIGIT; i++) {
-
-            int array[] = Sorting.mergeSort(listToArray(hashMap.get(i)));
-
-            assertEquals(true, Sorting.arrayIsSorted(array));
-
-        }
-
-    }
-
-    @org.junit.Test
-    public void insertionSort() {
-        for (int i = 0; i < TEST_DIGIT; i++) {
-            int array[] = Sorting.mergeSort(listToArray(hashMap.get(i)));
-            array = Sorting.insertionSort(array);
-            assertEquals(true, Sorting.arrayIsSorted(array));
-
-        }
-
-    }
-
-    @Test
+    //@Test
     public void consistsOfEqualsElements() {
         for (int i = 0; i < TEST_DIGIT; i++) {
             int array1[] = listToArray(getRandomArrayListWithoutRepeat());
@@ -140,8 +130,11 @@ public class SortingTest {
     }
 
 
-    @org.junit.Test
-    public void compareSorting() {
+
+
+    private void testingOn(HashMap<Integer, ArrayList<Integer>> inputHashMap) {
+        HashMap<String, Long> results = new HashMap<>();
+        hashMap = inputHashMap;
 
         long startTime;
         long endTime;
@@ -155,7 +148,7 @@ public class SortingTest {
                 assertEquals(true, Sorting.arrayIsSorted(array));
             }
             endTime = System.nanoTime();
-            System.out.println("BubbleSort   = " + (endTime - startTime) / normalize_koef);
+            results.put("BUBBLE_SORT", (endTime - startTime) / normalize_koef);
         }
 
 
@@ -168,7 +161,7 @@ public class SortingTest {
                 assertEquals(true, Sorting.arrayIsSorted(array));
             }
             endTime = System.nanoTime();
-            System.out.println("BubbleSortInt= " + (endTime - startTime) / normalize_koef);
+            results.put("BUBBLE_FROM_INTERNET_SORT", (endTime - startTime) / normalize_koef);
         }
 
 
@@ -181,7 +174,7 @@ public class SortingTest {
                 assertEquals(true, Sorting.arrayIsSorted(array));
             }
             endTime = System.nanoTime();
-            System.out.println("InsertionSort= " + (endTime - startTime) / normalize_koef);
+            results.put("INSERTION_SORT", (endTime - startTime) / normalize_koef);
         }
 
 
@@ -194,7 +187,7 @@ public class SortingTest {
                 assertEquals(true, Sorting.arrayIsSorted(array));
             }
             endTime = System.nanoTime();
-            System.out.println("MergeSort    = " + (endTime - startTime) / normalize_koef);
+            results.put("MERGE_SORT", (endTime - startTime) / normalize_koef);
         }
 
         if (MERGE_FROM_INTERNET_SORT) {
@@ -206,7 +199,7 @@ public class SortingTest {
                 assertEquals(true, Sorting.arrayIsSorted(array));
             }
             endTime = System.nanoTime();
-            System.out.println("MergeInternet= " + (endTime - startTime) / normalize_koef);
+            results.put("MERGE_FROM_INTERNET_SORT", (endTime - startTime) / normalize_koef);
         }
 
         if (QUICK_SORT) {
@@ -218,28 +211,54 @@ public class SortingTest {
                 assertEquals(true, Sorting.arrayIsSorted(array));
             }
             endTime = System.nanoTime();
-            System.out.println("Quick Sort= " + (endTime - startTime) / normalize_koef);
+            results.put("QUICK_SORT", (endTime - startTime) / normalize_koef);
         }
 
         if (TREE_SORT) {
-            TreeSet<Integer> treeSet = new TreeSet<>();
             startTime = System.nanoTime();
             for (int i = 0; i < TEST_DIGIT; i++) {
-                treeSet.addAll(hashMap.get(i));
-                int array[] = new int[treeSet.size()];
-                Iterator<Integer> iterator = treeSet.iterator();
-                for (int j = 0; j < treeSet.size(); j++)
-                    if (iterator.hasNext())
-                        array[j] = iterator.next();
-                    else break;
+                int array[] = Sorting.standartTreeSort(listToArray(hashMap.get(i)));
                 assertEquals(true,
                         Sorting.arraysConsistsOfEqualsElements(array, listToArray(hashMap.get(i))));
                 assertEquals(true, Sorting.arrayIsSorted(array));
             }
             endTime = System.nanoTime();
-            System.out.println("Tree Sort= " + (endTime - startTime) / normalize_koef);
+            results.put("TREE_SORT", (endTime - startTime) / normalize_koef);
         }
 
+        final int RESULT_SIZE = results.size();
+        for (int i = 0; i < RESULT_SIZE; i++) {
+
+            long bestTime = Long.MAX_VALUE;
+            String bestName = "";
+            for (Map.Entry<String, Long> entry : results.entrySet()) {
+                if (entry.getValue() < bestTime) {
+                    bestName = entry.getKey();
+                    bestTime = entry.getValue();
+                }
+            }
+            results.remove(bestName, bestTime);
+            System.out.println(i + " " + bestName + "\t = \t" + bestTime);
+        }
 
     }
+
+    @org.junit.Test
+    public void testingOnAbsolutelyUnsortedArrays() {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Absolutely Unsorted Arrays\n");
+        testingOn(generateAbsolutelyUnsortedHashMap());
+    }
+
+
+    @org.junit.Test
+    public void testingOnAbsolutelySortedArrays() {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Absolutely Sorted Arrays\n");
+        testingOn(generateAbsolutelySortedHashMap());
+    }
+
+
 }
+
+
