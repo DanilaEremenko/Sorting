@@ -8,7 +8,7 @@ public class Sorting {
     //Worst and Average Case Time Complexity: O(n*n)
     //Auxiliary Space: O(1)
     //Stable: Yes
-    static int[] bubbleSort(int array[]) {
+    public static int[] bubbleSort(int array[]) {
         int[] result;
         result = array.clone();
         while (true) {
@@ -30,7 +30,7 @@ public class Sorting {
 
     }
 
-    static int[] bubbleSortFromInternet(int array[]) {
+    public static int[] bubbleSortFromInternet(int array[]) {
         int[] result = array.clone();
         for (int i = 0; i < result.length - 1; i++)
             for (int j = 0; j < result.length - i - 1; j++)
@@ -50,7 +50,7 @@ public class Sorting {
     //Worst and Average Case Time Complexity: O(n*n)
     //Auxiliary Space: O(1)
     //Stable: Yes
-    static int[] insertionSort(int array[]) {
+    public static int[] insertionSort(int array[]) {
         int result[] = array.clone();
         for (int i = 1; i < result.length; ++i) {
             int key = result[i];
@@ -93,7 +93,7 @@ public class Sorting {
         return result;
     }
 
-    static int[] mergeSort(int[] array) {
+    public static int[] mergeSort(int[] array) {
         int mediana = array.length / 2;
         int array1[] = Arrays.copyOfRange(array, 0, mediana);
         int array2[] = Arrays.copyOfRange(array, mediana, array.length);
@@ -135,7 +135,7 @@ public class Sorting {
         return result;
     }
 
-    static int[] mergesortFromInternet(int[] array1) {
+    public static int[] mergesortFromInternet(int[] array1) {
         int[] buffer1 = Arrays.copyOf(array1, array1.length);
         int[] buffer2 = new int[array1.length];
         int[] result = mergesortInner(buffer1, buffer2, 0, array1.length);
@@ -181,7 +181,7 @@ public class Sorting {
         }
     }
 
-    static int[] quickSort(int array[]) {
+    public static int[] quickSort(int array[]) {
         int result[] = array.clone();
 
 
@@ -200,7 +200,7 @@ public class Sorting {
     //Worst:    O(n*logn)
     //Auxiliary Space: O(n)
     //Stable: Yes
-    static int[] standartTreeSort(int array[]) {
+    public static int[] standartTreeSort(int array[]) {
         int result[] = array.clone();
         TreeSet<Integer> treeSet = new TreeSet<>();
         for (int anResult : result)
@@ -219,7 +219,7 @@ public class Sorting {
     //----------------------------------------------------------------------------------------------
 
     //Different Methods for arrays
-    static boolean arrayIsSorted(int array[]) {
+    public static boolean arrayIsSorted(int array[]) {
         for (int i = 0; i < array.length - 1; i++)
             if (array[i] > array[i + 1])
                 return false;
@@ -235,7 +235,7 @@ public class Sorting {
     }
 
 
-    static boolean arraysConsistsOfEqualsElements(int array1[], int array2[]) {
+    public static boolean arraysConsistsOfEqualsElements(int array1[], int array2[]) {
         if (array1.length != array2.length)
             return false;
 
@@ -259,7 +259,7 @@ public class Sorting {
     }
 
 
-    static int[] arrayShuffle(int array[]) {
+    public static int[] arrayShuffle(int array[]) {
         int randomedIndexes[] = new int[array.length];
         int rIndex = 0;
         int result[] = new int[array.length];
@@ -279,14 +279,14 @@ public class Sorting {
     }
 
 
-    static void printArray(int array[]) {
+    public static void printArray(int array[]) {
         for (int anArray : array)
             System.out.println(anArray);
         System.out.println("\n");
     }
 
 
-    static void printTwoArray(int array1[], int array2[]) {
+    public static void printTwoArray(int array1[], int array2[]) {
         if (array1.length != array2.length) {
             System.out.println("Неравный размер массивов");
             return;
