@@ -8,8 +8,8 @@ public class Sorting {
     //Worst and Average Case Time Complexity: O(n*n)
     //Auxiliary Space: O(1)
     //Stable: Yes
-    public static int[] bubbleSort(int array[]) {
-        int[] result;
+    public static Integer[] bubbleSort(Integer array[]) {
+        Integer[] result;
         result = array.clone();
         while (true) {
             boolean end = true;
@@ -30,8 +30,8 @@ public class Sorting {
 
     }
 
-    public static int[] bubbleSortFromInternet(int array[]) {
-        int[] result = array.clone();
+    public static Integer[] bubbleSortFromInternet(Integer array[]) {
+        Integer[] result = array.clone();
         for (int i = 0; i < result.length - 1; i++)
             for (int j = 0; j < result.length - i - 1; j++)
                 if (result[j] > result[j + 1]) {
@@ -50,8 +50,8 @@ public class Sorting {
     //Worst and Average Case Time Complexity: O(n*n)
     //Auxiliary Space: O(1)
     //Stable: Yes
-    public static int[] insertionSort(int array[]) {
-        int result[] = array.clone();
+    public static Integer[] insertionSort(Integer array[]) {
+        Integer result[] = array.clone();
         for (int i = 1; i < result.length; ++i) {
             int key = result[i];
             int j = i - 1;
@@ -71,8 +71,8 @@ public class Sorting {
     //Worst and Average Case Time Complexity: O(n*logn)
     //Auxiliary Space: O(n)
     //Stable: Yes
-    private static int[] merge(int array1[], int array2[]) {
-        int result[] = new int[array1.length + array2.length];
+    private static Integer[] merge(Integer array1[], Integer array2[]) {
+        Integer result[] = new Integer[array1.length + array2.length];
         int index1 = 0, index2 = 0;
         for (int i = 0; i < result.length; i++) {
             if (index1 == array1.length) {
@@ -93,10 +93,10 @@ public class Sorting {
         return result;
     }
 
-    public static int[] mergeSort(int[] array) {
+    public static Integer[] mergeSort(Integer[] array) {
         int mediana = array.length / 2;
-        int array1[] = Arrays.copyOfRange(array, 0, mediana);
-        int array2[] = Arrays.copyOfRange(array, mediana, array.length);
+        Integer array1[] = Arrays.copyOfRange(array, 0, mediana);
+        Integer array2[] = Arrays.copyOfRange(array, mediana, array.length);
         if (mediana > 0) {
             array1 = mergeSort(array1);
             array2 = mergeSort(array2);
@@ -106,22 +106,22 @@ public class Sorting {
 
     //----------------------------------------------------------------------------------------------
 
-    private static int[] mergesortInner(int[] buffer1, int[] buffer2,
-                                        int startIndex, int endIndex) {
+    private static Integer[] mergesortInner(Integer[] buffer1, Integer[] buffer2,
+                                            int startIndex, int endIndex) {
         if (startIndex >= endIndex - 1) {
             return buffer1;
         }
 
         // уже отсортирован.
         int middle = startIndex + (endIndex - startIndex) / 2;
-        int[] sorted1 = mergesortInner(buffer1, buffer2, startIndex, middle);
-        int[] sorted2 = mergesortInner(buffer1, buffer2, middle, endIndex);
+        Integer[] sorted1 = mergesortInner(buffer1, buffer2, startIndex, middle);
+        Integer[] sorted2 = mergesortInner(buffer1, buffer2, middle, endIndex);
 
         // Слияние
         int index1 = startIndex;
         int index2 = middle;
         int destIndex = startIndex;
-        int[] result = sorted1 == buffer1 ? buffer2 : buffer1;
+        Integer[] result = sorted1 == buffer1 ? buffer2 : buffer1;
         while (index1 < middle && index2 < endIndex) {
             result[destIndex++] = sorted1[index1] < sorted2[index2]
                     ? sorted1[index1++] : sorted2[index2++];
@@ -135,11 +135,10 @@ public class Sorting {
         return result;
     }
 
-    public static int[] mergesortFromInternet(int[] array1) {
-        int[] buffer1 = Arrays.copyOf(array1, array1.length);
-        int[] buffer2 = new int[array1.length];
-        int[] result = mergesortInner(buffer1, buffer2, 0, array1.length);
-        return result;
+    public static Integer[] mergesortFromInternet(Integer[] array1) {
+        Integer[] buffer1 = Arrays.copyOf(array1, array1.length);
+        Integer[] buffer2 = new Integer[array1.length];
+        return mergesortInner(buffer1, buffer2, 0, array1.length);
     }
 
 
@@ -149,7 +148,7 @@ public class Sorting {
     //Worst:    O(n*n)
     //Auxiliary Space: O(n)
     //Stable: No
-    private static int partition(int array[], int low, int high) {
+    private static int partition(Integer array[], int low, int high) {
         int pivot = array[high];
         int i = (low - 1);
         for (int j = low; j < high; j++) {
@@ -170,7 +169,7 @@ public class Sorting {
     }
 
 
-    private static void quickSort(int[] array, int low, int high) {
+    private static void quickSort(Integer[] array, int low, int high) {
         if (low < high) {
 
             int pi = partition(array, low, high);
@@ -181,8 +180,8 @@ public class Sorting {
         }
     }
 
-    public static int[] quickSort(int array[]) {
-        int result[] = array.clone();
+    public static Integer[] quickSort(Integer array[]) {
+        Integer result[] = array.clone();
 
 
         int pi = partition(result, 0, result.length - 1);
@@ -200,11 +199,9 @@ public class Sorting {
     //Worst:    O(n*logn)
     //Auxiliary Space: O(n)
     //Stable: Yes
-    public static int[] standartTreeSort(int array[]) {
-        int result[] = array.clone();
-        TreeSet<Integer> treeSet = new TreeSet<>();
-        for (int anResult : result)
-            treeSet.add(anResult);
+    public static Integer[] standardTreeSort(Integer array[]) {
+        Integer result[] = array.clone();
+        TreeSet<Integer> treeSet = new TreeSet<>(Arrays.asList(result));
 
         Iterator<Integer> iterator = treeSet.iterator();
         int i = 0;
@@ -215,11 +212,26 @@ public class Sorting {
         return result;
     }
 
+    public static Integer[] myTreeSort(Integer array[]) {
+        Integer result[] = array.clone();
+        BinaryTree<Integer> binaryTree = new BinaryTree<>();
+        for (int anResult : result)
+            binaryTree.add(anResult);
+
+        Iterator<Integer> iterator = binaryTree.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            result[i] = iterator.next();
+            i++;
+        }
+        return result;
+
+    }
 
     //----------------------------------------------------------------------------------------------
 
     //Different Methods for arrays
-    public static boolean arrayIsSorted(int array[]) {
+    public static boolean arrayIsSorted(Integer array[]) {
         for (int i = 0; i < array.length - 1; i++)
             if (array[i] > array[i + 1])
                 return false;
@@ -227,7 +239,7 @@ public class Sorting {
     }
 
 
-    private static boolean contains(int array[], int digit) {
+    private static boolean contains(Integer array[], int digit) {
         for (int anArray : array)
             if (anArray == digit)
                 return true;
@@ -235,13 +247,11 @@ public class Sorting {
     }
 
 
-    public static boolean arraysConsistsOfEqualsElements(int array1[], int array2[]) {
+    public static boolean arraysConsistsOfEqualsElements(Integer array1[], Integer array2[]) {
         if (array1.length != array2.length)
             return false;
 
-        List<Integer> list = new ArrayList<>();
-        for (int anArray : array2)
-            list.add(anArray);
+        List<Integer> list = new ArrayList<>(Arrays.asList(array2));
 
         for (int anArray1 : array1) {
             boolean hasFound = false;
@@ -259,10 +269,10 @@ public class Sorting {
     }
 
 
-    public static int[] arrayShuffle(int array[]) {
-        int randomedIndexes[] = new int[array.length];
+    public static Integer[] arrayShuffle(Integer array[]) {
+        Integer randomedIndexes[] = new Integer[array.length];
         int rIndex = 0;
-        int result[] = new int[array.length];
+        Integer result[] = new Integer[array.length];
 
         result[0] = array[0];
 
@@ -279,14 +289,14 @@ public class Sorting {
     }
 
 
-    public static void printArray(int array[]) {
+    public static void printArray(Integer array[]) {
         for (int anArray : array)
             System.out.println(anArray);
         System.out.println("\n");
     }
 
 
-    public static void printTwoArray(int array1[], int array2[]) {
+    public static void printTwoArray(Integer array1[], Integer array2[]) {
         if (array1.length != array2.length) {
             System.out.println("Неравный размер массивов");
             return;
