@@ -205,17 +205,10 @@ public class Sorting {
     //Worst:    O(n*logn)
     //Auxiliary Space: O(n)
     //Stable: Yes
-    public static <T extends Comparable<? super T>> List<T> standardTreeSort(List<T> list) {
-        List<T> result = new ArrayList<T>(list);
-        TreeSet<T> treeSet = new TreeSet<>(result);
+    public static <T extends Comparable<? super T>> List<T> treeSort(List<T> list) {
+        TreeSet<T> treeSet = new TreeSet<>(list);
 
-        Iterator<T> iterator = treeSet.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            result.set(i, iterator.next());
-            i++;
-        }
-        return result;
+        return new ArrayList<T>(treeSet);
     }
 
 //    public static <T extends Comparable<? super T>> List<T> myTreeSort(List<T> list) {
